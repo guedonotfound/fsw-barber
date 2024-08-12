@@ -65,6 +65,7 @@ const Home = async () => {
         {/* AGENDAMENTO */}
         <BookingItem />
 
+        {/* RECOMENDADOS */}
         <h2 className="mb-3 mt-6 text-xs font-bold uppercase text-gray-400">
           Recomendados
         </h2>
@@ -73,6 +74,8 @@ const Home = async () => {
             <BarbershopItem key={barbershop.id} barbershop={barbershop} />
           ))}
         </div>
+
+        {/* POPULARES */}
         <h2 className="mb-3 mt-6 text-xs font-bold uppercase text-gray-400">
           Populares
         </h2>
@@ -82,6 +85,8 @@ const Home = async () => {
           ))}
         </div>
       </div>
+
+      {/* footer */}
       <footer>
         <Card>
           <CardContent className="px-5 py-6">
