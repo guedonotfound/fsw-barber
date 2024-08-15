@@ -1,3 +1,5 @@
+"use client"
+
 import { Button } from "./ui/button"
 import { CalendarIcon, HomeIcon, LogInIcon, LogOutIcon } from "lucide-react"
 import { SheetClose, SheetContent, SheetHeader, SheetTitle } from "./ui/sheet"
@@ -12,8 +14,11 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "./ui/dialog"
+import { signIn } from "next-auth/react"
 
 const SidebarSheet = () => {
+  const handleLoginWithGoogleClick = () => signIn("google")
+
   return (
     <SheetContent className="overflow-y-auto">
       <SheetHeader>
@@ -28,14 +33,18 @@ const SidebarSheet = () => {
               <LogInIcon />
             </Button>
           </DialogTrigger>
-          <DialogContent className="w-[90%] rounded-2xl">
+          <DialogContent className="w-[90%] rounded-lg">
             <DialogHeader>
               <DialogTitle>Faça login na plataforma</DialogTitle>
               <DialogDescription>
                 Conecte-se usando sua conta do Google
               </DialogDescription>
             </DialogHeader>
-            <Button variant="outline" className="gap-1 font-bold">
+            <Button
+              variant="outline"
+              className="gap-1 font-bold"
+              onClick={handleLoginWithGoogleClick}
+            >
               <Image
                 alt="Fazer login com Google"
                 src="/google.svg"
