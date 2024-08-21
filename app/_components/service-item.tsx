@@ -66,6 +66,7 @@ const getTimeList = (bookings: Booking[], selectedDay: Date) => {
     if (bookedTimes.has(time)) {
       return false
     }
+
     if (isToday) {
       if (
         hour < currentHour ||
