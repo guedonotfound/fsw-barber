@@ -5,7 +5,6 @@ import BarbershopItem from "./_components/barbershop-item"
 import BookingItem from "./_components/booking-item"
 import Search from "./_components/search"
 import QuickSearch from "./_components/quick-search"
-// import { getServerSession } from "next-auth/next"
 
 const Home = async () => {
   const barbershops = await db.barbershop.findMany({})

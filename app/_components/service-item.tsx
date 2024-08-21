@@ -18,7 +18,7 @@ import { ptBR } from "date-fns/locale"
 import { useState } from "react"
 import { format, set } from "date-fns"
 import { createBooking } from "../_actions/create-booking"
-//import { useSession } from "next-auth/react"
+import { useSession } from "next-auth/react"
 import { toast } from "sonner"
 
 interface ServiceItemProps {
@@ -48,11 +48,13 @@ const TIME_LIST = [
 ]
 
 const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
-  //const { data } = useSession()
+  const { data } = useSession()
   const [selectedDay, setSelectedDay] = useState<Date | undefined>(undefined)
   const [selectedTime, setSelectedTime] = useState<string | undefined>(
     undefined,
   )
+
+  console.log({ data })
 
   const handleDateSelect = (date: Date | undefined) => {
     setSelectedDay(date)
@@ -64,7 +66,7 @@ const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
 
   const handleCreateBooking = async () => {
     // 1. Não exibir horários já agendados
-    // 2. Salvar o agendamento para o usuário logado
+    // 2. Não deixar o usuário reservar se não estiver logado
     try {
       if (!selectedDay || !selectedTime) return
       const hour = Number(selectedTime.split(":")[0])
@@ -75,7 +77,7 @@ const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
       })
       await createBooking({
         serviceId: service.id,
-        userId: "clzwrc2i50000fhy050vcth5y",
+        userId: (data?.user as any).id,
         date: newDate,
       })
       toast.success("Reserva criada com sucesso!")
@@ -195,17 +197,18 @@ const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
                         </div>
                       </CardContent>
                     </Card>
-                    <div className="py-5">
-                      <SheetFooter>
-                        <SheetClose asChild>
-                          <Button onClick={handleCreateBooking}>
-                            Confirmar
-                          </Button>
-                        </SheetClose>
-                      </SheetFooter>
-                    </div>
                   </div>
                 )}
+                <SheetFooter className="mt-5 px-5">
+                  <SheetClose asChild>
+                    <Button
+                      onClick={handleCreateBooking}
+                      disabled={!selectedDay || !selectedTime}
+                    >
+                      Confirmar
+                    </Button>
+                  </SheetClose>
+                </SheetFooter>
               </SheetContent>
             </Sheet>
           </div>
