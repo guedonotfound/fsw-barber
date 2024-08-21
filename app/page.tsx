@@ -5,12 +5,9 @@ import BarbershopItem from "./_components/barbershop-item"
 import BookingItem from "./_components/booking-item"
 import Search from "./_components/search"
 import QuickSearch from "./_components/quick-search"
-import { getServerSession } from "next-auth/next"
-import { authOptions } from "./api/auth/[...nextauth]/route"
+// import { getServerSession } from "next-auth/next"
 
 const Home = async () => {
-  const session = await getServerSession(authOptions)
-
   const barbershops = await db.barbershop.findMany({})
   const popularBarbershops = await db.barbershop.findMany({
     orderBy: {
@@ -24,11 +21,11 @@ const Home = async () => {
       <Header />
       <div className="p-5">
         {/* TEXTO */}
-        {session?.user ? (
+        {/* {session?.user ? (
           <h2 className="text-xl font-bold">Olá, {session.user.name}!</h2>
-        ) : (
-          <h2 className="text-xl font-bold">Olá!</h2>
-        )}
+        ) : ( */}
+        <h2 className="text-xl font-bold">Olá!</h2>
+        {/* )} */}
         <p>Segunda-feira, 05 de agosto.</p>
 
         {/* BUSCA */}
