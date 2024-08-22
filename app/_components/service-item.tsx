@@ -112,7 +112,7 @@ const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
         selectedDay.toDateString() === new Date().toDateString()
       ) {
         setSelectedDay(addDays(new Date(), 1))
-        toast.error("Sem mais horários para hoje!")
+        toast.error("Sem horários para a data selecionada!")
       }
     }
 
@@ -152,7 +152,6 @@ const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
       })
       await createBooking({
         serviceId: service.id,
-        userId: (data?.user as any).id,
         date: newDate,
       })
       handleBookingSheetOpenChange()
