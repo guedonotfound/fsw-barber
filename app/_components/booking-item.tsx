@@ -29,7 +29,7 @@ const BookingItem = ({ booking }: BookingItemProps) => {
   return (
     <Sheet>
       <SheetTrigger className="w-full">
-        <Card className="min-w-[90%]">
+        <Card className="min-w-[80vw]">
           <CardContent className="flex justify-between p-0">
             {/* ESQUERDA */}
             <div className="flex flex-col gap-2 py-5 pl-5">
