@@ -13,8 +13,8 @@ import {
 } from "./ui/sheet"
 import { Calendar } from "./ui/calendar"
 import { ptBR } from "date-fns/locale"
-import { useEffect, useState } from "react"
-import { addDays, format, set } from "date-fns"
+import { useEffect, useMemo, useState } from "react"
+import { addDays, format, isPast, isToday, set } from "date-fns"
 import { createBooking } from "../_actions/create-booking"
 import { useSession } from "next-auth/react"
 import { toast } from "sonner"
@@ -48,34 +48,28 @@ const TIME_LIST = [
   "17:30",
 ]
 
-const getTimeList = (bookings: Booking[], selectedDay: Date) => {
-  const bookedTimes = new Set(
-    bookings.map(
-      (booking) =>
-        `${booking.date.getHours().toString().padStart(2, "0")}:${booking.date.getMinutes().toString().padStart(2, "0")}`,
-    ),
-  )
+interface GetTimeListProps {
+  bookings: Booking[]
+  selectedDay: Date
+}
 
-  const now = new Date()
-  const currentHour = now.getHours()
-  const currentMinute = now.getMinutes()
-
-  const isToday = selectedDay.toDateString() === now.toDateString()
-
+const getTimeList = ({ bookings, selectedDay }: GetTimeListProps) => {
   return TIME_LIST.filter((time) => {
-    const [hour, minute] = time.split(":").map(Number)
+    const [hour, minutes] = time.split(":").map(Number)
 
-    if (bookedTimes.has(time)) {
+    const timeIsOnThePast = isPast(set(new Date(), { hours: hour, minutes }))
+
+    if (timeIsOnThePast && isToday(selectedDay)) {
       return false
     }
 
-    if (isToday) {
-      if (
-        hour < currentHour ||
-        (hour === currentHour && minute < currentMinute)
-      ) {
-        return false
-      }
+    const hasBookingOnCurrentTime = bookings.some(
+      (booking) =>
+        booking.date.getHours() === hour &&
+        booking.date.getMinutes() === minutes,
+    )
+    if (hasBookingOnCurrentTime) {
+      return false
     }
 
     return true
@@ -104,7 +98,7 @@ const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
       setDayBookings(bookings)
 
       // Verifica se há horários disponíveis para o dia selecionado
-      const availableTimes = getTimeList(bookings, selectedDay)
+      const availableTimes = getTimeList({ bookings, selectedDay })
 
       // Se não houver horários disponíveis e for hoje, ajusta para amanhã
       if (
@@ -112,6 +106,7 @@ const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
         selectedDay.toDateString() === new Date().toDateString()
       ) {
         setSelectedDay(addDays(new Date(), 1))
+        setSelectedTime(undefined)
         toast.error("Sem horários para a data selecionada!")
       }
     }
@@ -161,6 +156,11 @@ const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
       toast.error("Erro ao criar reserva!")
     }
   }
+
+  const timeList = useMemo(() => {
+    if (!selectedDay) return []
+    return getTimeList({ bookings: dayBookings, selectedDay })
+  }, [dayBookings, selectedDay])
 
   return (
     <>
@@ -237,7 +237,7 @@ const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
                   </div>
                   {selectedDay && (
                     <div className="flex gap-3 overflow-x-auto border-b border-solid p-5 [&::-webkit-scrollbar]:hidden">
-                      {getTimeList(dayBookings, selectedDay).map((time) => (
+                      {timeList.map((time) => (
                         <Button
                           key={time}
                           className="rounded-full"
