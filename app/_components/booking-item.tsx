@@ -8,7 +8,9 @@ import { format, isFuture } from "date-fns"
 import { ptBR } from "date-fns/locale"
 import {
   Sheet,
+  SheetClose,
   SheetContent,
+  SheetFooter,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
@@ -18,6 +20,16 @@ import PhoneItem from "./phone-item"
 import { Button } from "./ui/button"
 import { cancelBooking } from "../_actions/cancel-booking"
 import { toast } from "sonner"
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "./ui/dialog"
 
 interface BookingItemProps {
   booking: Prisma.BookingGetPayload<{
@@ -141,19 +153,55 @@ const BookingItem = ({ booking }: BookingItemProps) => {
               </div>
             </CardContent>
           </Card>
-          {isConfirmed ? (
-            <Button
-              className="mb-6 w-full"
-              variant="secondary"
-              onClick={() => handleCancelBooking(booking.id)}
-            >
-              Cancelar reserva
-            </Button>
-          ) : null}
-          {barbershop.phones.map((phone) => (
-            <PhoneItem key={phone} phone={phone} />
-          ))}
+          <div className="space-y-3">
+            {barbershop.phones.map((phone) => (
+              <PhoneItem key={phone} phone={phone} />
+            ))}
+          </div>
         </div>
+        <SheetFooter className="mt-6">
+          <div className="flex items-center gap-3">
+            <SheetClose asChild>
+              <Button variant="outline" className="w-full">
+                Voltar
+              </Button>
+            </SheetClose>
+            {isConfirmed && (
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button className="w-full" variant="destructive">
+                    Cancelar reserva
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="w-[90%] rounded-lg">
+                  <DialogHeader>
+                    <DialogTitle>Você deseja cancelar sua reserva?</DialogTitle>
+                    <DialogDescription>
+                      Você deseja <span className="font-extrabold">MESMO</span>{" "}
+                      efetivar o cancelamento? Esta ação{" "}
+                      <span className="font-extrabold">NÃO</span> poderá ser
+                      desfeita e você terá de realizar a reserva novamente.
+                    </DialogDescription>
+                  </DialogHeader>
+                  <DialogFooter className="flex-row gap-3">
+                    <DialogClose asChild>
+                      <Button className="w-full" variant="secondary">
+                        Voltar
+                      </Button>
+                    </DialogClose>
+                    <Button
+                      className="w-full"
+                      variant="destructive"
+                      onClick={() => handleCancelBooking}
+                    >
+                      Cancelar reserva
+                    </Button>
+                  </DialogFooter>
+                </DialogContent>
+              </Dialog>
+            )}
+          </div>
+        </SheetFooter>
       </SheetContent>
     </Sheet>
   )
