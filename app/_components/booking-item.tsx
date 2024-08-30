@@ -1,3 +1,5 @@
+"use client"
+
 import { Prisma } from "@prisma/client"
 import { Avatar, AvatarImage } from "./ui/avatar"
 import { Badge } from "./ui/badge"
@@ -13,6 +15,9 @@ import {
 } from "./ui/sheet"
 import Image from "next/image"
 import PhoneItem from "./phone-item"
+import { Button } from "./ui/button"
+import { cancelBooking } from "../_actions/cancel-booking"
+import { toast } from "sonner"
 
 interface BookingItemProps {
   booking: Prisma.BookingGetPayload<{
@@ -26,6 +31,14 @@ const BookingItem = ({ booking }: BookingItemProps) => {
     service: { barbershop },
   } = booking
   const isConfirmed = isFuture(booking.date)
+  const handleCancelBooking = async (bookingId: string) => {
+    try {
+      await cancelBooking({ bookingId })
+      toast.success("Reserva cancelada com sucesso!")
+    } catch (error) {
+      toast.error("Erro ao cancelar reserva!")
+    }
+  }
   return (
     <Sheet>
       <SheetTrigger className="w-full">
@@ -39,7 +52,9 @@ const BookingItem = ({ booking }: BookingItemProps) => {
               >
                 {isConfirmed ? "Confirmado" : "Finalizado"}
               </Badge>
-              <h3 className="font-semibold">{booking.service.name}</h3>
+              <h3 className="text-left font-semibold">
+                {booking.service.name}
+              </h3>
 
               <div className="flex items-center gap-2">
                 <Avatar className="h-6 w-6">
@@ -95,7 +110,7 @@ const BookingItem = ({ booking }: BookingItemProps) => {
           >
             {isConfirmed ? "Confirmado" : "Finalizado"}
           </Badge>
-          <Card className="mb-6 mt-3">
+          <Card className="mb-3 mt-3">
             <CardContent className="space-y-3 p-3">
               <div className="flex items-center justify-between">
                 <h2 className="font-bold">{booking.service.name}</h2>
@@ -126,6 +141,15 @@ const BookingItem = ({ booking }: BookingItemProps) => {
               </div>
             </CardContent>
           </Card>
+          {isConfirmed ? (
+            <Button
+              className="mb-6 w-full"
+              variant="secondary"
+              onClick={() => handleCancelBooking(booking.id)}
+            >
+              Cancelar reserva
+            </Button>
+          ) : null}
           {barbershop.phones.map((phone) => (
             <PhoneItem key={phone} phone={phone} />
           ))}
