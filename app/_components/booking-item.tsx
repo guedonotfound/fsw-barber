@@ -54,7 +54,7 @@ const BookingItem = ({ booking }: BookingItemProps) => {
   return (
     <Sheet>
       <SheetTrigger className="w-full">
-        <Card className="min-w-[80vw]">
+        <Card className="min-w-[90%]">
           <CardContent className="flex justify-between p-0">
             {/* ESQUERDA */}
             <div className="flex flex-col gap-2 py-5 pl-5">
@@ -192,7 +192,7 @@ const BookingItem = ({ booking }: BookingItemProps) => {
                     <Button
                       className="w-full"
                       variant="destructive"
-                      onClick={() => handleCancelBooking}
+                      onClick={() => handleCancelBooking(booking.id)}
                     >
                       Cancelar reserva
                     </Button>
