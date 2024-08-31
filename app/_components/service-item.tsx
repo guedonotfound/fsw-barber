@@ -105,8 +105,13 @@ const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
       ) {
         setSelectedDay(addDays(new Date(), 1))
         setSelectedTime(undefined)
-        getTimeList({ bookings, selectedDay })
         toast.error("Sem horários para a data selecionada!")
+
+        const nextBookings = await getBookings({
+          date: addDays(new Date(), 1),
+          serviceId: service.id,
+        })
+        setDayBookings(nextBookings)
       }
     }
 
