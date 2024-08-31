@@ -87,26 +87,33 @@ const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
   const [dayBookings, setDayBookings] = useState<Booking[]>([])
   const [bookingSheetIsOpen, setBookingSheetIsOpen] = useState(false)
 
+  const [loading, setLoading] = useState(false)
+
   useEffect(() => {
     if (!selectedDay) return
 
     const fetchBookings = async () => {
-      const bookings = await getBookings({
-        date: selectedDay,
-        serviceId: service.id,
-      })
-      setDayBookings(bookings)
+      setLoading(true)
+      try {
+        const bookings = await getBookings({
+          date: selectedDay,
+          serviceId: service.id,
+        })
+        setDayBookings(bookings)
 
-      const availableTimes = getTimeList({ bookings, selectedDay })
+        const availableTimes = getTimeList({ bookings, selectedDay })
 
-      if (
-        availableTimes.length === 0 &&
-        selectedDay.toDateString() === new Date().toDateString()
-      ) {
-        const nextAvailableDay = addDays(selectedDay, 1)
-        setSelectedDay(nextAvailableDay)
-        setSelectedTime(undefined)
-        toast.error("Sem horários para a data selecionada!")
+        if (
+          availableTimes.length === 0 &&
+          selectedDay.toDateString() === new Date().toDateString()
+        ) {
+          const nextAvailableDay = addDays(selectedDay, 1)
+          setSelectedDay(nextAvailableDay)
+          setSelectedTime(undefined)
+          toast.error("Sem horários para a data selecionada!")
+        }
+      } finally {
+        setLoading(false)
       }
     }
 
@@ -247,22 +254,30 @@ const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
                       }}
                     />
                   </div>
-                  {selectedDay && (
-                    <div className="flex gap-3 overflow-x-auto border-b border-solid p-5 [&::-webkit-scrollbar]:hidden">
-                      {timeList.map((time) => (
-                        <Button
-                          key={time}
-                          className="rounded-full"
-                          variant={
-                            selectedTime === time ? "default" : "outline"
-                          }
-                          onClick={() => handleTimeSelect(time)}
-                        >
-                          {time}
-                        </Button>
-                      ))}
+
+                  {loading ? (
+                    <div className="flex justify-center p-5">
+                      <p>Carregando horários...</p>
                     </div>
+                  ) : (
+                    selectedDay && (
+                      <div className="flex gap-3 overflow-x-auto border-b border-solid p-5 [&::-webkit-scrollbar]:hidden">
+                        {timeList.map((time) => (
+                          <Button
+                            key={time}
+                            className="rounded-full"
+                            variant={
+                              selectedTime === time ? "default" : "outline"
+                            }
+                            onClick={() => handleTimeSelect(time)}
+                          >
+                            {time}
+                          </Button>
+                        ))}
+                      </div>
+                    )
                   )}
+
                   {selectedTime && selectedDay && (
                     <div className="p-5">
                       <Card>
