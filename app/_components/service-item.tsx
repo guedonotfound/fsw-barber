@@ -103,20 +103,28 @@ const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
         availableTimes.length === 0 &&
         selectedDay.toDateString() === new Date().toDateString()
       ) {
-        setSelectedDay(addDays(new Date(), 1))
+        const nextAvailableDay = addDays(selectedDay, 1)
+        setSelectedDay(nextAvailableDay)
         setSelectedTime(undefined)
         toast.error("Sem horários para a data selecionada!")
-
-        const nextBookings = await getBookings({
-          date: addDays(new Date(), 1),
-          serviceId: service.id,
-        })
-        setDayBookings(nextBookings)
       }
     }
 
     fetchBookings()
   }, [selectedDay, service.id])
+
+  useEffect(() => {
+    if (!selectedDay) return
+
+    const fetchBookingsForNextDay = async () => {
+      const bookings = await getBookings({
+        date: selectedDay,
+        serviceId: service.id,
+      })
+      setDayBookings(bookings)
+    }
+    fetchBookingsForNextDay()
+  }, [selectedDay])
 
   const handleBookingClick = () => {
     if (data?.user) {
