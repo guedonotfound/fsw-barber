@@ -97,16 +97,15 @@ const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
       })
       setDayBookings(bookings)
 
-      // Verifica se há horários disponíveis para o dia selecionado
       const availableTimes = getTimeList({ bookings, selectedDay })
 
-      // Se não houver horários disponíveis e for hoje, ajusta para amanhã
       if (
         availableTimes.length === 0 &&
         selectedDay.toDateString() === new Date().toDateString()
       ) {
         setSelectedDay(addDays(new Date(), 1))
         setSelectedTime(undefined)
+        getTimeList({ bookings, selectedDay })
         toast.error("Sem horários para a data selecionada!")
       }
     }
