@@ -112,6 +112,9 @@ const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
           setSelectedTime(undefined)
           toast.error("Sem horários para a data selecionada!")
         }
+      } catch (error) {
+        console.error("Erro ao buscar agendamentos:", error)
+        toast.error("Erro ao buscar agendamentos!")
       } finally {
         setLoading(false)
       }
@@ -119,19 +122,6 @@ const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
 
     fetchBookings()
   }, [selectedDay, service.id])
-
-  useEffect(() => {
-    if (!selectedDay) return
-
-    const fetchBookingsForNextDay = async () => {
-      const bookings = await getBookings({
-        date: selectedDay,
-        serviceId: service.id,
-      })
-      setDayBookings(bookings)
-    }
-    fetchBookingsForNextDay()
-  }, [selectedDay])
 
   const handleBookingClick = () => {
     if (data?.user) {
