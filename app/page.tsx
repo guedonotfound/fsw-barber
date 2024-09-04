@@ -81,15 +81,17 @@ const Home = async () => {
 
           {/* AGENDAMENTO */}
           {confirmedBookings.length > 0 && (
-            <h2 className="mb-3 mt-6 text-xs font-bold uppercase text-gray-400">
-              Agendamentos
-            </h2>
+            <>
+              <h2 className="mb-3 mt-6 text-xs font-bold uppercase text-gray-400">
+                Agendamentos
+              </h2>
+              <div className="flex gap-3 overflow-x-auto [&::-webkit-scrollbar]:hidden">
+                {confirmedBookings.map((booking) => (
+                  <BookingItem key={booking.id} booking={booking} />
+                ))}
+              </div>
+            </>
           )}
-          <div className="flex gap-3 overflow-x-auto [&::-webkit-scrollbar]:hidden">
-            {confirmedBookings.map((booking) => (
-              <BookingItem key={booking.id} booking={booking} />
-            ))}
-          </div>
 
           {/* RECOMENDADOS */}
           <h2 className="mb-3 mt-6 text-xs font-bold uppercase text-gray-400">
