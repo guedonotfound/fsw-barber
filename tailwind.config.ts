@@ -74,14 +74,12 @@ const config = {
       },
       // Adicionando novos breakpoints personalizados
       screens: {
-        sm: "640px", // Padrão
-        "2sm": "720px", // Customizado entre sm e md
-        md: "768px", // Padrão
-        "2md": "900px", // Customizado entre md e lg
-        lg: "1024px", // Padrão
-        "2lg": "1150px", // Customizado entre lg e xl
-        xl: "1280px", // Padrão
-        "2xl": "1536px", // Padrão
+        sm: "640px",
+        md: "768px",
+        "2md": "961px",
+        lg: "1024px",
+        xl: "1280px",
+        "2xl": "1536px",
       },
     },
   },

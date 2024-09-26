@@ -11,7 +11,7 @@ import { format } from "date-fns"
 import { ptBR } from "date-fns/locale"
 import { getConfirmedBookings } from "../_data/get-confirmed-bookings"
 
-const Home = async () => {
+const MobileHomePage = async () => {
   const session = await getServerSession(authOptions)
   const barbershops = await db.barbershop.findMany({})
   const popularBarbershops = await db.barbershop.findMany({
@@ -103,4 +103,4 @@ const Home = async () => {
   )
 }
 
-export default Home
+export default MobileHomePage
