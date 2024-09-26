@@ -1,9 +1,9 @@
 "use client"
 
 import { Prisma } from "@prisma/client"
-import { Avatar, AvatarImage } from "./ui/avatar"
-import { Badge } from "./ui/badge"
-import { Card, CardContent } from "./ui/card"
+import { Avatar, AvatarImage } from "../ui/avatar"
+import { Badge } from "../ui/badge"
+import { Card, CardContent } from "../ui/card"
 import { format, isFuture } from "date-fns"
 import { ptBR } from "date-fns/locale"
 import {
@@ -14,11 +14,10 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from "./ui/sheet"
+} from "../ui/sheet"
 import Image from "next/image"
-import PhoneItem from "./phone-item"
-import { Button } from "./ui/button"
-import { cancelBooking } from "../_actions/cancel-booking"
+import PhoneItem from "../phone-item"
+import { Button } from "../ui/button"
 import { toast } from "sonner"
 import {
   Dialog,
@@ -29,8 +28,9 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "./ui/dialog"
-import BookingSummary from "./booking-summary"
+} from "../ui/dialog"
+import BookingSummary from "../booking-summary"
+import { cancelBooking } from "@/app/_actions/cancel-booking"
 
 interface BookingItemProps {
   booking: Prisma.BookingGetPayload<{
@@ -54,10 +54,10 @@ const BookingItem = ({ booking }: BookingItemProps) => {
   return (
     <Sheet>
       <SheetTrigger className="w-full min-w-[90%]">
-        <Card className="min-w-[90%]">
+        <Card className="h-[111px] min-w-[90%]">
           <CardContent className="flex justify-between p-0">
             {/* ESQUERDA */}
-            <div className="flex flex-col gap-2 py-5 pl-5">
+            <div className="flex flex-col gap-2 py-3 pl-5">
               <Badge
                 className="w-fit"
                 variant={isConfirmed ? "default" : "secondary"}

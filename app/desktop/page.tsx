@@ -1,14 +1,16 @@
 import Image from "next/image"
 import { db } from "../_lib/prisma"
-import BookingItem from "../_components/booking-item"
+import BookingItem from "../_components/desktop/booking-item"
 import { getServerSession } from "next-auth"
 import { authOptions } from "../_lib/auth"
 import { format } from "date-fns"
 import { ptBR } from "date-fns/locale"
-import { getConfirmedBookings } from "../_data/get-confirmed-bookings"
 import Header from "../_components/desktop/header"
 import Search from "../_components/desktop/search"
 import BarbershopCarousel from "../_components/desktop/barbershop-carousel"
+import { getConfirmedBookingsDesktop } from "../_data/get-confirmed-bookings-desktop"
+import { Button } from "../_components/ui/button"
+import Link from "next/link"
 
 const DesktopHomePage = async () => {
   const session = await getServerSession(authOptions)
@@ -18,7 +20,7 @@ const DesktopHomePage = async () => {
       name: "desc",
     },
   })
-  const confirmedBookings = await getConfirmedBookings()
+  const confirmedBookings = await getConfirmedBookingsDesktop()
 
   return (
     <>
@@ -51,16 +53,26 @@ const DesktopHomePage = async () => {
                 </span>
               </p>
 
-              <div className="mt-6">
+              <div className="py-[46.5px]">
                 <Search />
               </div>
 
               {confirmedBookings.length > 0 && (
                 <>
-                  <h2 className="mb-3 mt-6 text-xs font-bold uppercase text-gray-400">
-                    Agendamentos
-                  </h2>
-                  <div className="flex gap-3 overflow-x-auto [&::-webkit-scrollbar]:hidden">
+                  <div className="mb-5 flex items-center justify-between">
+                    <h2 className="text-sm font-bold uppercase text-gray-400">
+                      Próximo agendamento
+                    </h2>
+                    <Button
+                      variant="link"
+                      size="sm"
+                      className="max-h-5 text-xs"
+                      asChild
+                    >
+                      <Link href="./bookings">Ver todos</Link>
+                    </Button>
+                  </div>
+                  <div className="flex gap-3">
                     {confirmedBookings.map((booking) => (
                       <BookingItem
                         key={booking.id}

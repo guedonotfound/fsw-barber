@@ -17,7 +17,7 @@ const formSchema = z.object({
 })
 
 const Search = () => {
-  const [loading, setLoading] = useState(false) // Estado de carregamento
+  const [loading, setLoading] = useState(false)
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: { title: "" },
@@ -46,12 +46,27 @@ const Search = () => {
           render={({ field }) => (
             <FormItem className="w-full">
               <FormControl>
-                <Input
-                  placeholder="Busque barbearias ou serviços..."
-                  {...field}
-                  className="w-full bg-secondary focus:outline-none focus:ring focus:ring-primary"
-                  disabled={loading} // Desabilita o input enquanto carrega
-                />
+                <div className="relative">
+                  <Input
+                    placeholder="Busque barbearias ou serviços..."
+                    {...field}
+                    className="w-full bg-secondary pr-12 focus:outline-none focus:ring focus:ring-primary"
+                    disabled={loading} // Desabilita o input enquanto carrega
+                  />
+                  <Button
+                    type="submit"
+                    variant="ghost"
+                    className="absolute inset-y-0 right-0 flex items-center rounded-none px-3 py-2 focus:outline-none focus:ring focus:ring-primary"
+                    aria-label="Pesquisar"
+                    disabled={loading} // Desabilita o botão enquanto carrega
+                  >
+                    {loading ? (
+                      <Loader2 className="animate-spin" />
+                    ) : (
+                      <SearchIcon />
+                    )}
+                  </Button>
+                </div>
               </FormControl>
               {/* Mensagem de erro de validação */}
               <FormMessage />
@@ -59,18 +74,6 @@ const Search = () => {
           )}
         />
         {/* Botão de Submissão */}
-        <Button
-          type="submit"
-          className="rounded-xl focus:outline-none focus:ring focus:ring-primary"
-          aria-label="Pesquisar"
-          disabled={loading} // Desabilita o botão enquanto carrega
-        >
-          {loading ? (
-            <Loader2 className="animate-spin" /> // Ícone de carregamento
-          ) : (
-            <SearchIcon />
-          )}
-        </Button>
       </form>
     </Form>
   )
