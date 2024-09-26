@@ -3,11 +3,11 @@ import type { Config } from "tailwindcss"
 const config = {
   darkMode: ["class"],
   content: [
-    './pages/**/*.{ts,tsx}',
-    './components/**/*.{ts,tsx}',
-    './app/**/*.{ts,tsx}',
-    './src/**/*.{ts,tsx}',
-	],
+    "./pages/**/*.{ts,tsx}",
+    "./components/**/*.{ts,tsx}",
+    "./app/**/*.{ts,tsx}",
+    "./src/**/*.{ts,tsx}",
+  ],
   prefix: "",
   theme: {
     container: {
@@ -71,6 +71,17 @@ const config = {
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+      },
+      // Adicionando novos breakpoints personalizados
+      screens: {
+        sm: "640px", // Padrão
+        "2sm": "720px", // Customizado entre sm e md
+        md: "768px", // Padrão
+        "2md": "900px", // Customizado entre md e lg
+        lg: "1024px", // Padrão
+        "2lg": "1150px", // Customizado entre lg e xl
+        xl: "1280px", // Padrão
+        "2xl": "1536px", // Padrão
       },
     },
   },
