@@ -66,7 +66,7 @@ const DesktopHomePage = async () => {
                     <Button
                       variant="link"
                       size="sm"
-                      className="max-h-5 text-xs"
+                      className="max-h-fit px-0 text-xs"
                       asChild
                     >
                       <Link href="./bookings">Ver todos</Link>
