@@ -37,7 +37,6 @@ const Search = () => {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(handleSubmit)} className="flex gap-2">
-        {/* Campo de Busca */}
         <FormField
           control={form.control}
           name="title"
@@ -46,7 +45,7 @@ const Search = () => {
               <FormControl>
                 <div className="relative">
                   <Input
-                    placeholder="Busque barbearias ou serviços..."
+                    placeholder="Busque barbearias..."
                     {...field}
                     className="w-full bg-secondary pr-12 focus:outline-none focus:ring focus:ring-primary"
                     disabled={loading}
@@ -66,12 +65,10 @@ const Search = () => {
                   </Button>
                 </div>
               </FormControl>
-              {/* Mensagem de erro de validação */}
               <FormMessage />
             </FormItem>
           )}
         />
-        {/* Botão de Submissão */}
       </form>
     </Form>
   )

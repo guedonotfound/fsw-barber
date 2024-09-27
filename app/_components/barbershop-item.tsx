@@ -16,7 +16,7 @@ interface BarbershopItemProps {
 
 const BarbershopItem = ({ barbershop }: BarbershopItemProps) => {
   return (
-    <Card className="min-w-[167px] rounded-2xl">
+    <Card className="m-0 min-w-[167px] rounded-2xl">
       <Link href={`/barbershops/${barbershop.id}`}>
         <CardContent className="p-0 px-1 pt-1">
           {/*IMAGEM*/}
