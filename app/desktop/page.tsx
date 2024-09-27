@@ -14,13 +14,31 @@ import Link from "next/link"
 
 const DesktopHomePage = async () => {
   const session = await getServerSession(authOptions)
-  const barbershops = await db.barbershop.findMany({})
+
+  const barbershops = await db.barbershop.findMany({
+    select: {
+      id: true,
+      name: true,
+      address: true,
+      imageUrl: true,
+    },
+  })
+
   const popularBarbershops = await db.barbershop.findMany({
+    select: {
+      id: true,
+      name: true,
+      address: true,
+      imageUrl: true,
+    },
     orderBy: {
       name: "desc",
     },
   })
-  const confirmedBookings = await getConfirmedBookingsDesktop()
+
+  const confirmedBookings = await getConfirmedBookingsDesktop({
+    userId: (session?.user as any)?.id,
+  })
 
   return (
     <>
@@ -88,6 +106,7 @@ const DesktopHomePage = async () => {
               <BarbershopCarousel
                 title="Recomendados"
                 barbershops={barbershops}
+                delay={2000}
               />
             </div>
           </div>

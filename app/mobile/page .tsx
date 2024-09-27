@@ -13,8 +13,21 @@ import { getConfirmedBookings } from "../_data/get-confirmed-bookings"
 
 const MobileHomePage = async () => {
   const session = await getServerSession(authOptions)
-  const barbershops = await db.barbershop.findMany({})
+  const barbershops = await db.barbershop.findMany({
+    select: {
+      id: true,
+      name: true,
+      address: true,
+      imageUrl: true,
+    },
+  })
   const popularBarbershops = await db.barbershop.findMany({
+    select: {
+      id: true,
+      name: true,
+      address: true,
+      imageUrl: true,
+    },
     orderBy: {
       name: "desc",
     },
