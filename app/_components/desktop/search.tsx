@@ -26,13 +26,11 @@ const Search = () => {
   const router = useRouter()
 
   const handleSubmit = async (data: z.infer<typeof formSchema>) => {
-    setLoading(true) // Ativa o carregamento
+    setLoading(true)
     try {
-      // Simula uma busca, pode ser um tempo para completar a navegação
-      await new Promise((resolve) => setTimeout(resolve, 1000))
       router.push(`/barbershops?title=${data.title}`)
     } finally {
-      setLoading(false) // Desativa o carregamento
+      setLoading(false)
     }
   }
 
@@ -51,14 +49,14 @@ const Search = () => {
                     placeholder="Busque barbearias ou serviços..."
                     {...field}
                     className="w-full bg-secondary pr-12 focus:outline-none focus:ring focus:ring-primary"
-                    disabled={loading} // Desabilita o input enquanto carrega
+                    disabled={loading}
                   />
                   <Button
                     type="submit"
                     variant="ghost"
                     className="absolute inset-y-0 right-0 flex items-center rounded-none px-3 py-2 focus:outline-none focus:ring focus:ring-primary"
                     aria-label="Pesquisar"
-                    disabled={loading} // Desabilita o botão enquanto carrega
+                    disabled={loading}
                   >
                     {loading ? (
                       <Loader2 className="animate-spin" />
