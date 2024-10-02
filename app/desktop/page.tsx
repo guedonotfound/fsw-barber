@@ -43,7 +43,7 @@ const DesktopHomePage = async () => {
   return (
     <>
       <div>
-        <Header />
+        <Header isHomePage />
 
         <div className="relative h-[463px] w-full px-16 py-16">
           <Image
@@ -90,14 +90,10 @@ const DesktopHomePage = async () => {
                       <Link href="./bookings">Ver todos</Link>
                     </Button>
                   </div>
-                  <div className="flex gap-3">
-                    {confirmedBookings.map((booking) => (
-                      <BookingItem
-                        key={booking.id}
-                        booking={JSON.parse(JSON.stringify(booking))}
-                      />
-                    ))}
-                  </div>
+                  <BookingItem
+                    key={confirmedBookings[0].id}
+                    booking={JSON.parse(JSON.stringify(confirmedBookings[0]))}
+                  />
                 </>
               )}
             </div>

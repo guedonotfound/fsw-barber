@@ -36,11 +36,14 @@ const Header = async ({ isHomePage }: HeaderProps) => {
           <Button
             variant="ghost"
             className="w-[40.47%] gap-2 xl:text-xs 2xl:text-sm"
+            asChild
           >
-            <div className="hidden xl:block">
-              <CalendarIcon size={16} />
-            </div>
-            Agendamentos
+            <Link href="/bookings">
+              <div className="hidden xl:block">
+                <CalendarIcon size={16} />
+              </div>
+              Agendamentos
+            </Link>
           </Button>
 
           {!session?.user ? (
