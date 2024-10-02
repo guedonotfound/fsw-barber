@@ -219,11 +219,13 @@ const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
                   Reservar
                 </Button>
 
-                <SheetContent className="px-0">
+                <SheetContent className="w-[80%] px-0">
                   <SheetHeader>
-                    <SheetTitle>Fazer reserva</SheetTitle>
+                    <SheetTitle className="text-center">
+                      Fazer reserva
+                    </SheetTitle>
                   </SheetHeader>
-                  <div className="border-b border-solid py-5">
+                  <div className="flex w-full max-w-none justify-center border-b border-solid py-5">
                     <Calendar
                       mode="single"
                       locale={ptBR}
@@ -231,9 +233,19 @@ const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
                       fromDate={new Date()}
                       onSelect={handleDateSelect}
                       styles={{
+                        root: {
+                          width: "100%",
+                        },
+                        table: {
+                          width: "100%",
+                        },
                         head_cell: {
+                          display: "flex",
+                          justifyContent: "space-between",
+                          alignItems: "center",
                           width: "100%",
                           textTransform: "capitalize",
+                          padding: "0 8px",
                         },
                         cell: {
                           width: "100%",
@@ -244,13 +256,19 @@ const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
                         nav_button_previous: {
                           width: "32px",
                           height: "32px",
+                          margin: "0",
+                          padding: "0",
                         },
                         nav_button_next: {
                           width: "32px",
                           height: "32px",
+                          margin: "0",
+                          padding: "0",
                         },
                         caption: {
                           textTransform: "capitalize",
+                          flexGrow: 1,
+                          textAlign: "center",
                         },
                       }}
                     />

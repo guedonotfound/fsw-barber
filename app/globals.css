@@ -47,3 +47,48 @@
     @apply h-full bg-background text-foreground;
   }
 }
+
+@layer base {
+  .rdp {
+    width: 100% !important;
+    max-width: none !important;
+  }
+
+  .rdp * {
+    width: 100% !important;
+  }
+
+  .rdp .rdp-table {
+    width: 100% !important;
+  }
+
+  .rdp .rdp-cell,
+  .rdp .rdp-head_cell {
+    width: 100% !important;
+  }
+
+  .rdp .rdp-nav,
+  .rdp .rdp-caption {
+    width: 100% !important;
+  }
+
+  .rdp .rdp-nav_button_previous,
+  .rdp .rdp-nav_button_next {
+    width: 32px !important;
+    height: 32px !important;
+  }
+
+  .custom-head-cell {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 8px;
+  }
+
+  .custom-nav-button {
+    width: 32px;
+    height: 32px;
+    margin: 0;
+    padding: 0;
+  }
+}
