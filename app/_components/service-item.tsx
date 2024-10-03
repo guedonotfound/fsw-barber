@@ -91,13 +91,14 @@ const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
   const [dayBookings, setDayBookings] = useState<Booking[]>([])
   const [bookingSheetIsOpen, setBookingSheetIsOpen] = useState(false)
 
-  const [loading, setLoading] = useState(false)
+  const [loadingTimes, setLoadingTimes] = useState(false)
+  const [loadingBooking, setLoadingBooking] = useState(false)
 
   useEffect(() => {
     if (!selectedDay) return
 
     const fetchBookings = async () => {
-      setLoading(true)
+      setLoadingTimes(true)
       try {
         const bookings = await getBookings({
           date: selectedDay,
@@ -120,7 +121,7 @@ const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
         console.error("Erro ao buscar agendamentos:", error)
         toast.error("Erro ao buscar agendamentos!")
       } finally {
-        setLoading(false)
+        setLoadingTimes(false)
       }
     }
 
@@ -158,6 +159,7 @@ const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
   }
 
   const handleCreateBooking = async () => {
+    setLoadingBooking(true)
     try {
       if (!selectedDate) return
 
@@ -175,6 +177,8 @@ const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
     } catch (error) {
       console.error(error)
       toast.error("Erro ao criar reserva!")
+    } finally {
+      setLoadingBooking(false)
     }
   }
 
@@ -236,7 +240,7 @@ const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
                     />
                   </div>
 
-                  {loading ? (
+                  {loadingTimes ? (
                     <div className="flex h-[81.11px] items-center justify-center border-b border-solid p-5">
                       <Loader2 className="animate-spin" />
                     </div>
@@ -270,9 +274,13 @@ const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
                   )}
                   <SheetFooter className="mt-5 px-5">
                     <Button
+                      className="w-full"
                       onClick={handleCreateBooking}
-                      disabled={!selectedDay || !selectedTime}
+                      disabled={!selectedDay || !selectedTime || loadingBooking}
                     >
+                      {loadingBooking && (
+                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      )}
                       Confirmar
                     </Button>
                   </SheetFooter>
