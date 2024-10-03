@@ -23,6 +23,7 @@ import { Dialog, DialogContent } from "./ui/dialog"
 import SignInDialog from "./sign-in-dialog"
 import BookingSummary from "./booking-summary"
 import { useRouter } from "next/navigation"
+import { Loader2 } from "lucide-react"
 
 interface ServiceItemProps {
   service: BarbershopService
@@ -232,51 +233,12 @@ const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
                       selected={selectedDay}
                       fromDate={new Date()}
                       onSelect={handleDateSelect}
-                      styles={{
-                        root: {
-                          width: "100%",
-                        },
-                        table: {
-                          width: "100%",
-                        },
-                        head_cell: {
-                          display: "flex",
-                          justifyContent: "space-between",
-                          alignItems: "center",
-                          width: "100%",
-                          textTransform: "capitalize",
-                          padding: "0 8px",
-                        },
-                        cell: {
-                          width: "100%",
-                        },
-                        button: {
-                          width: "100%",
-                        },
-                        nav_button_previous: {
-                          width: "32px",
-                          height: "32px",
-                          margin: "0",
-                          padding: "0",
-                        },
-                        nav_button_next: {
-                          width: "32px",
-                          height: "32px",
-                          margin: "0",
-                          padding: "0",
-                        },
-                        caption: {
-                          textTransform: "capitalize",
-                          flexGrow: 1,
-                          textAlign: "center",
-                        },
-                      }}
                     />
                   </div>
 
                   {loading ? (
-                    <div className="flex justify-center p-5">
-                      <p>Carregando horários...</p>
+                    <div className="flex h-[81.11px] items-center justify-center border-b border-solid p-5">
+                      <Loader2 className="animate-spin" />
                     </div>
                   ) : (
                     selectedDay && (
