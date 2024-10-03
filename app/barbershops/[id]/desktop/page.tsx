@@ -2,19 +2,31 @@ import BarbershopDetails from "@/app/_components/desktop/barbershop-details"
 import Header from "@/app/_components/desktop/header"
 import ServiceItem from "@/app/_components/service-item"
 import { Card, CardContent } from "@/app/_components/ui/card"
-import { Prisma } from "@prisma/client"
+import { db } from "@/app/_lib/prisma"
 import { MapPinIcon, StarIcon } from "lucide-react"
 import Image from "next/image"
+import { notFound } from "next/navigation"
 
 interface BarbershopPageProps {
-  barbershop: Prisma.BarbershopGetPayload<{
-    include: {
-      services: true
-    }
-  }>
+  params: {
+    id: string
+  }
 }
 
-const DesktopBarbershopPage = async ({ barbershop }: BarbershopPageProps) => {
+const DesktopBarbershopPage = async ({ params }: BarbershopPageProps) => {
+  const barbershop = await db.barbershop.findUnique({
+    where: {
+      id: params.id,
+    },
+    include: {
+      services: true,
+    },
+  })
+
+  if (!barbershop) {
+    return notFound()
+  }
+
   return (
     <div>
       <Header />
