@@ -20,8 +20,8 @@ const DesktopBookings = async () => {
       <Header />
 
       <BookingList
-        confirmedBookings={confirmedBookings}
-        concludedBookings={concludedBookings}
+        initialConfirmedBookings={confirmedBookings}
+        initialConcludedBookings={concludedBookings}
       />
     </>
   )

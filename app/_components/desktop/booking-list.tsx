@@ -11,20 +11,35 @@ type BookingType = Prisma.BookingGetPayload<{
 }>
 
 interface BookingListProps {
-  confirmedBookings: BookingType[]
-  concludedBookings: BookingType[]
+  initialConfirmedBookings: BookingType[]
+  initialConcludedBookings: BookingType[]
 }
 
 const BookingList = ({
-  confirmedBookings,
-  concludedBookings,
+  initialConfirmedBookings,
+  initialConcludedBookings,
 }: BookingListProps) => {
+  const [confirmedBookings, setConfirmedBookings] = useState<BookingType[]>(
+    initialConfirmedBookings,
+  )
+  const [concludedBookings, setConcludedBookings] = useState<BookingType[]>(
+    initialConcludedBookings,
+  )
   const [selectedBooking, setSelectedBooking] = useState<BookingType | null>(
     null,
   )
 
   const handleSelectBooking = (booking: BookingType) => {
     setSelectedBooking(booking)
+  }
+
+  const handleCancelBooking = (bookingId: string) => {
+    setConfirmedBookings((prev) =>
+      prev.filter((booking) => booking.id !== bookingId),
+    )
+    setConcludedBookings((prev) =>
+      prev.filter((booking) => booking.id !== bookingId),
+    )
   }
 
   return (
@@ -52,7 +67,9 @@ const BookingList = ({
                   <div
                     key={booking.id}
                     onClick={() => handleSelectBooking(booking)}
-                    className="cursor-pointer rounded-md p-0.5 hover:bg-primary"
+                    className={`cursor-pointer rounded-md p-0.5 hover:bg-primary ${
+                      selectedBooking?.id === booking.id ? "bg-primary" : ""
+                    }`}
                   >
                     <BookingItem
                       booking={JSON.parse(JSON.stringify(booking))}
@@ -79,7 +96,9 @@ const BookingList = ({
                   <div
                     key={booking.id}
                     onClick={() => handleSelectBooking(booking)}
-                    className="cursor-pointer rounded-md p-0.5 hover:bg-primary"
+                    className={`cursor-pointer rounded-md p-0.5 hover:bg-primary ${
+                      selectedBooking?.id === booking.id ? "bg-primary" : ""
+                    }`}
                   >
                     <BookingItem
                       booking={JSON.parse(JSON.stringify(booking))}
@@ -97,6 +116,7 @@ const BookingList = ({
             <BookingDetails
               booking={selectedBooking}
               setSelectedBooking={setSelectedBooking}
+              onCancel={handleCancelBooking} // Passando a função de cancelamento
             />
           </div>
         )}

@@ -1,3 +1,5 @@
+"use client"
+
 import { Prisma } from "@prisma/client"
 import { Card, CardContent } from "../ui/card"
 import Image from "next/image"
@@ -20,36 +22,48 @@ import { isFuture } from "date-fns"
 import { cancelBooking } from "@/app/_actions/cancel-booking"
 import { toast } from "sonner"
 import { Separator } from "../ui/separator"
+import { Loader2 } from "lucide-react"
+import { useState } from "react"
 
 type BookingType = Prisma.BookingGetPayload<{
   include: { service: { include: { barbershop: true } } }
 }>
 
 interface BookingDetailsProps {
-  booking: Prisma.BookingGetPayload<{
-    include: { service: { include: { barbershop: true } } }
-  }>
+  booking: BookingType
   setSelectedBooking: React.Dispatch<React.SetStateAction<BookingType | null>>
+  // eslint-disable-next-line no-unused-vars
+  onCancel: (bookingId: string) => void
 }
 
 const BookingDetails = ({
   booking,
   setSelectedBooking,
+  onCancel,
 }: BookingDetailsProps) => {
   const {
     service: { barbershop },
   } = booking
+
   const isConfirmed = isFuture(booking.date)
+  const [isDialogOpen, setIsDialogOpen] = useState(false)
+  const [isCancelling, setIsCancelling] = useState(false)
 
   const handleCancelBooking = async (bookingId: string) => {
+    setIsCancelling(true)
+    setIsDialogOpen(false)
     try {
       await cancelBooking({ bookingId })
       toast.success("Reserva cancelada com sucesso!")
       setSelectedBooking(null)
+      onCancel(bookingId)
     } catch (error) {
       toast.error("Erro ao cancelar reserva!")
+    } finally {
+      setIsCancelling(false)
     }
   }
+
   return (
     <Card className="mt-[87px]">
       <CardContent>
@@ -106,9 +120,17 @@ const BookingDetails = ({
         </div>
         <div className="flex items-center gap-3">
           {isConfirmed && (
-            <Dialog>
+            <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
               <DialogTrigger asChild>
-                <Button className="mt-6 w-full" variant="destructive">
+                <Button
+                  className="mt-6 w-full"
+                  variant="destructive"
+                  onClick={() => setIsDialogOpen(true)}
+                  disabled={isCancelling}
+                >
+                  {isCancelling && (
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  )}
                   Cancelar reserva
                 </Button>
               </DialogTrigger>
