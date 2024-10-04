@@ -3,20 +3,32 @@ import ServiceItem from "@/app/_components/service-item"
 import SidebarSheet from "@/app/_components/sidebar-sheet"
 import { Button } from "@/app/_components/ui/button"
 import { Sheet, SheetTrigger } from "@/app/_components/ui/sheet"
-import { Prisma } from "@prisma/client"
+import { db } from "@/app/_lib/prisma"
 import { ChevronLeftIcon, MapPinIcon, MenuIcon, StarIcon } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
+import { notFound } from "next/navigation"
 
 interface BarbershopPageProps {
-  barbershop: Prisma.BarbershopGetPayload<{
-    include: {
-      services: true
-    }
-  }>
+  params: {
+    id: string
+  }
 }
 
-const MobileBarbershopPage = async ({ barbershop }: BarbershopPageProps) => {
+const MobileBarbershopPage = async ({ params }: BarbershopPageProps) => {
+  const barbershop = await db.barbershop.findUnique({
+    where: {
+      id: params.id,
+    },
+    include: {
+      services: true,
+    },
+  })
+
+  if (!barbershop) {
+    return notFound()
+  }
+
   return (
     <div>
       {/* IMAGEM */}

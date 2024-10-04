@@ -1,7 +1,5 @@
-import { notFound } from "next/navigation"
 import DesktopBarbershopPage from "./desktop/page"
 import MobileBarbershopPage from "./mobile/page"
-import { db } from "@/app/_lib/prisma"
 
 interface BarbershopPageProps {
   params: {
@@ -9,26 +7,14 @@ interface BarbershopPageProps {
   }
 }
 
-const BarbershopPage = async ({ params }: BarbershopPageProps) => {
-  const barbershop = await db.barbershop.findUnique({
-    where: {
-      id: params.id,
-    },
-    include: {
-      services: true,
-    },
-  })
-
-  if (!barbershop) {
-    return notFound()
-  }
+const BarbershopPage = ({ params }: BarbershopPageProps) => {
   return (
     <div>
       <div className="block 2md:hidden">
-        <MobileBarbershopPage barbershop={barbershop} />
+        <MobileBarbershopPage params={params} />
       </div>
       <div className="hidden 2md:block">
-        <DesktopBarbershopPage barbershop={barbershop} />
+        <DesktopBarbershopPage params={params} />
       </div>
     </div>
   )
