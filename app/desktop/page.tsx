@@ -5,12 +5,13 @@ import { getServerSession } from "next-auth"
 import { authOptions } from "../_lib/auth"
 import { format } from "date-fns"
 import { ptBR } from "date-fns/locale"
-import Header from "../_components/desktop/header"
+
 import Search from "../_components/desktop/search"
 import BarbershopCarousel from "../_components/desktop/barbershop-carousel"
 import { getConfirmedBookingsDesktop } from "../_data/get-confirmed-bookings-desktop"
 import { Button } from "../_components/ui/button"
 import Link from "next/link"
+import Header from "../_components/desktop/header"
 
 const DesktopHomePage = async () => {
   const session = await getServerSession(authOptions)
