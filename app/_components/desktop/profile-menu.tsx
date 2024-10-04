@@ -9,8 +9,6 @@ import {
   DropdownMenuContent,
   DropdownMenuGroup,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu"
 import { Session } from "next-auth"
@@ -41,8 +39,6 @@ const ProfileMenu = ({ session }: ProfileMenuProps) => {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-[195.52px]">
-        <DropdownMenuLabel className="pl-2">Minha conta</DropdownMenuLabel>
-        <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <DropdownMenuItem className="gap-2" onClick={() => signOut()}>
             <LogOutIcon size={16} />
