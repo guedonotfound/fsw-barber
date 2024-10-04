@@ -1,6 +1,6 @@
 import BarbershopDetails from "@/app/_components/desktop/barbershop-details"
 import Header from "@/app/_components/desktop/header"
-import ServiceItem from "@/app/_components/service-item"
+import ServiceItem from "@/app/_components/desktop/service-item"
 import { Card, CardContent } from "@/app/_components/ui/card"
 import { db } from "@/app/_lib/prisma"
 import { MapPinIcon, StarIcon } from "lucide-react"
