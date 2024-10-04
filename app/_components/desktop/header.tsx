@@ -7,8 +7,8 @@ import { Dialog, DialogContent, DialogTrigger } from "../ui/dialog"
 import SignInDialog from "../sign-in-dialog"
 import { getServerSession } from "next-auth"
 import { authOptions } from "@/app/_lib/auth"
-import { Avatar, AvatarImage } from "../ui/avatar"
 import Search from "./search"
+import ProfileMenu from "./profile-menu"
 
 interface HeaderProps {
   isHomePage?: boolean
@@ -59,19 +59,7 @@ const Header = async ({ isHomePage }: HeaderProps) => {
               </DialogContent>
             </Dialog>
           ) : (
-            <div className="flex w-[56.27%] items-center gap-2">
-              <Avatar>
-                <AvatarImage
-                  src={session?.user?.image ?? ""}
-                  alt="Avatar"
-                  className="object-cover"
-                />
-              </Avatar>
-              <div>
-                <p className="font-bold">{session.user.name}</p>
-                <p className="text-xs">{session.user.email}</p>
-              </div>
-            </div>
+            <ProfileMenu session={session} />
           )}
         </div>
       </CardContent>
