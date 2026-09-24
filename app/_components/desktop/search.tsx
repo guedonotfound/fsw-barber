@@ -47,13 +47,13 @@ const Search = () => {
                   <Input
                     placeholder="Busque barbearias..."
                     {...field}
-                    className="w-full bg-secondary pr-12 focus:outline-none focus:ring focus:ring-primary"
+                    className="bg-secondary focus:ring-primary w-full pr-12 focus:ring-3 focus:outline-hidden"
                     disabled={loading}
                   />
                   <Button
                     type="submit"
                     variant="ghost"
-                    className="absolute inset-y-0 right-0 flex items-center rounded-none px-3 py-2 focus:outline-none focus:ring focus:ring-primary"
+                    className="focus:ring-primary absolute inset-y-0 right-0 flex items-center rounded-none px-3 py-2 focus:ring-3 focus:outline-hidden"
                     aria-label="Pesquisar"
                     disabled={loading}
                   >

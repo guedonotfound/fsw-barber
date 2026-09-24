@@ -95,7 +95,7 @@ const BookingItem = ({ booking }: BookingItemProps) => {
         <SheetHeader>
           <SheetTitle className="text-left">Informações da reserva</SheetTitle>
         </SheetHeader>
-        <div className="relative mt-6 flex h-[180px] w-full items-end">
+        <div className="relative mt-6 flex h-45 w-full items-end">
           <Image
             src="/map.png"
             alt={`Mapa da barbearia ${barbershop.name}`}
@@ -122,7 +122,7 @@ const BookingItem = ({ booking }: BookingItemProps) => {
           >
             {isConfirmed ? "Confirmado" : "Finalizado"}
           </Badge>
-          <div className="mb-3 mt-3">
+          <div className="mt-3 mb-3">
             <BookingSummary
               barbershop={barbershop}
               service={booking.service}
@@ -130,7 +130,7 @@ const BookingItem = ({ booking }: BookingItemProps) => {
             />
           </div>
           <div className="space-y-3">
-            {barbershop.phones.map((phone) => (
+            {barbershop.phones.map((phone: string) => (
               <PhoneItem key={phone} phone={phone} />
             ))}
           </div>

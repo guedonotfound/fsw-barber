@@ -65,9 +65,9 @@ const BookingDetails = ({
   }
 
   return (
-    <Card className="mt-[87px]">
+    <Card className="mt-21.75">
       <CardContent>
-        <div className="relative mt-6 flex h-[180px] w-full items-end">
+        <div className="relative mt-6 flex h-45 w-full items-end">
           <Image
             src="/map.png"
             alt={`Mapa da barbearia ${barbershop.name}`}
@@ -87,8 +87,8 @@ const BookingDetails = ({
           </Card>
         </div>
 
-        <div className="my-5 w-[404px] space-y-3 text-sm">
-          <h2 className="font-bold uppercase text-gray-400">Sobre nós</h2>
+        <div className="my-5 w-101 space-y-3 text-sm">
+          <h2 className="font-bold text-gray-400 uppercase">Sobre nós</h2>
           <p className="text-justify">{barbershop?.description}</p>
         </div>
 
@@ -96,7 +96,7 @@ const BookingDetails = ({
 
         <div className="mt-5 space-y-5">
           <div className="space-y-3">
-            {barbershop.phones.map((phone) => (
+            {barbershop.phones.map((phone: string) => (
               <PhoneItem key={phone} phone={phone} />
             ))}
           </div>
@@ -110,7 +110,7 @@ const BookingDetails = ({
             {isConfirmed ? "Confirmado" : "Finalizado"}
           </Badge>
 
-          <div className="mb-3 mt-3">
+          <div className="mt-3 mb-3">
             <BookingSummary
               barbershop={barbershop}
               service={booking.service}

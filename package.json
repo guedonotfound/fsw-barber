@@ -1,6 +1,7 @@
 {
   "name": "fsw-barber",
   "version": "0.1.0",
+  "type": "module",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -16,7 +17,8 @@
   "dependencies": {
     "@auth/prisma-adapter": "^2.4.2",
     "@hookform/resolvers": "^5.9.1",
-    "@prisma/client": "^5.18.0",
+    "@prisma/adapter-pg": "^7.10.0",
+    "@prisma/client": "^7.10.0",
     "@radix-ui/react-alert-dialog": "^1.1.1",
     "@radix-ui/react-avatar": "^1.1.0",
     "@radix-ui/react-dialog": "^1.1.1",
@@ -30,7 +32,6 @@
     "@radix-ui/react-switch": "^1.1.0",
     "@radix-ui/react-toast": "^1.2.1",
     "@shadcn/ui": "^0.0.4",
-    "autoprefixer": "^10.4.20",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "date-fns": "^4.4.0",
@@ -40,6 +41,7 @@
     "next": "^16.3.6",
     "next-auth": "^4.24.7",
     "next-themes": "^0.4.6",
+    "pg": "^8.23.0",
     "react": "^19.3.0",
     "react-day-picker": "^10.0.1",
     "react-dom": "^19.3.0",
@@ -51,9 +53,11 @@
     "zod": "^4.6.5"
   },
   "devDependencies": {
+    "@tailwindcss/postcss": "^4.3.3",
     "@types/node": "^26.6.2",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
+    "dotenv": "^18.0.3",
     "eslint": "^9.39.5",
     "eslint-config-next": "^16.3.6",
     "git-commit-msg-linter": "^5.0.8",
@@ -62,8 +66,8 @@
     "postcss": "^8.4.41",
     "prettier": "^3.3.3",
     "prettier-plugin-tailwindcss": "^0.8.1",
-    "prisma": "^5.18.0",
-    "tailwindcss": "^3.4.10",
+    "prisma": "^7.10.0",
+    "tailwindcss": "^4.3.3",
     "typescript": "^5"
   }
 }
