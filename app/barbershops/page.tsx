@@ -2,10 +2,7 @@ import DesktopBarbershopsPage from "./desktop/page"
 import MobileBarbershopsPage from "./mobile/page"
 
 interface BarbershopsPageProps {
-  searchParams: {
-    title?: string
-    service?: string
-  }
+  searchParams: Promise<{ title?: string; service?: string }>
 }
 
 const Bookings = ({ searchParams }: BarbershopsPageProps) => {

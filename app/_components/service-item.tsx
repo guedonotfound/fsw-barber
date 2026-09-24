@@ -47,7 +47,7 @@ const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
       setBookingSheetIsOpen(false)
       router.refresh()
       toast.success("Agendamento criado com sucesso!")
-    } catch (error) {
+    } catch {
       toast.error("Erro ao criar agendamento!")
     } finally {
       setLoadingBooking(false)

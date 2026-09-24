@@ -8,19 +8,14 @@ import Image from "next/image"
 import { notFound } from "next/navigation"
 
 interface BarbershopPageProps {
-  params: {
-    id: string
-  }
+  params: Promise<{ id: string }>
 }
 
 const DesktopBarbershopPage = async ({ params }: BarbershopPageProps) => {
+  const { id } = await params
   const barbershop = await db.barbershop.findUnique({
-    where: {
-      id: params.id,
-    },
-    include: {
-      services: true,
-    },
+    where: { id },
+    include: { services: true },
   })
 
   if (!barbershop) {

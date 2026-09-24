@@ -3,22 +3,15 @@ import Header from "@/app/_components/desktop/header"
 import { db } from "@/app/_lib/prisma"
 
 interface BarbershopsPageProps {
-  searchParams: {
-    title?: string
-    service?: string
-  }
+  searchParams: Promise<{ title?: string; service?: string }>
 }
 
 const DesktopBarbershopsPage = async ({
   searchParams,
 }: BarbershopsPageProps) => {
+  const { title, service } = await searchParams
   const barbershops = await db.barbershop.findMany({
-    where: {
-      name: {
-        contains: searchParams?.title,
-        mode: "insensitive",
-      },
-    },
+    where: { name: { contains: title, mode: "insensitive" } },
   })
 
   return (
@@ -27,7 +20,7 @@ const DesktopBarbershopsPage = async ({
       <div className="flex w-full justify-center pt-10">
         <div className="w-[82.22%]">
           <h2 className="font-bolt pb-5 pt-10 text-xl">
-            Resultados para &quot;{searchParams.title || searchParams.service}
+            Resultados para &quot;{title || service}
             &quot;
           </h2>
 

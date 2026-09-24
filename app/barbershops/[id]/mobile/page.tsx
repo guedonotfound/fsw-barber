@@ -10,19 +10,16 @@ import Link from "next/link"
 import { notFound } from "next/navigation"
 
 interface BarbershopPageProps {
-  params: {
+  params: Promise<{
     id: string
-  }
+  }>
 }
 
 const MobileBarbershopPage = async ({ params }: BarbershopPageProps) => {
+  const { id } = await params
   const barbershop = await db.barbershop.findUnique({
-    where: {
-      id: params.id,
-    },
-    include: {
-      services: true,
-    },
+    where: { id },
+    include: { services: true },
   })
 
   if (!barbershop) {

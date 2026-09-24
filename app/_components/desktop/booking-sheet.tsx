@@ -56,7 +56,8 @@ const BookingSheet = ({
           mode="single"
           locale={ptBR}
           selected={selectedDay}
-          fromDate={new Date()}
+          startMonth={new Date()}
+          hidden={{ before: new Date() }}
           onSelect={handleDateSelect}
         />
       </div>

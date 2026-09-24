@@ -57,7 +57,7 @@ const BookingDetails = ({
       toast.success("Reserva cancelada com sucesso!")
       setSelectedBooking(null)
       onCancel(bookingId)
-    } catch (error) {
+    } catch {
       toast.error("Erro ao cancelar reserva!")
     } finally {
       setIsCancelling(false)

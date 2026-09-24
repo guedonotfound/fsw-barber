@@ -2,9 +2,7 @@ import DesktopBarbershopPage from "./desktop/page"
 import MobileBarbershopPage from "./mobile/page"
 
 interface BarbershopPageProps {
-  params: {
-    id: string
-  }
+  params: Promise<{ id: string }>
 }
 
 const BarbershopPage = ({ params }: BarbershopPageProps) => {

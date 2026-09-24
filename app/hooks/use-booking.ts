@@ -28,7 +28,7 @@ export const useBooking = (serviceId: string) => {
           setSelectedTime(undefined)
           toast.error("Sem horários para a data selecionada!")
         }
-      } catch (error) {
+      } catch {
         toast.error("Erro ao buscar agendamentos!")
       } finally {
         setLoadingTimes(false)
